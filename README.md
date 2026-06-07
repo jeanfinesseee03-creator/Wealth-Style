@@ -24,4 +24,4 @@ Wealth Style is a modern clothing brand website designed to showcase premium str
 - Order tracking
 
 ## Author
-Created by Jean Sanchez for the Wealth Style clothing brand.
+Created by Jean Finesse for the Wealth Style clothing brand.
