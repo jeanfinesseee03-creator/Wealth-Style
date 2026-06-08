@@ -73,3 +73,25 @@ button {
   border: none;
   cursor: pointer;
 }
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 90px;
+    height: auto;
+}
+
+.brand-text h1 {
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.brand-text p {
+    margin: 0;
+    color: gold;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+}
