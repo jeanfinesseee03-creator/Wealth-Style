@@ -25,17 +25,23 @@
             width: 100%;
             padding: 20px 40px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             z-index: 100;
+            gap: 60px;
         }
 
         .logo {
             color: white;
             font-size: 2rem;
             font-weight: bold;
+            order: 2;
+        }
+
+        nav {
+            order: 1;
         }
 
         nav a {
