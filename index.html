@@ -4,6 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Themed Background</title>
+    header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+.logo {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 1rem;
+}
+
+nav a:hover {
+    color: gold;
+}
+
+section {
+    position: relative;
+    z-index: 10;
+    color: white;
+    padding: 100px 50px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
     <style>
         * {
             margin: 0;
