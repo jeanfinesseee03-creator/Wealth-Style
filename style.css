@@ -73,29 +73,33 @@ nav a {
 }
 
 .products {
-  display: flex;
-  gap: 30px;
-  padding: 40px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .product {
-  width: 300px;
-  background: rgba(255,255,255,.05);
-  padding: 20px;
-  border-radius: 15px;
+    width: 300px;
+    background: rgba(255,255,255,.05);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
 }
 
 .product img {
-  width: 100%;
-  border-radius: 10px;
+    width: 100%;
+    border-radius: 10px;
 }
 
 button {
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
 }
+
 .brand {
     display: flex;
     align-items: center;
@@ -118,43 +122,34 @@ button {
     font-size: 0.9rem;
     letter-spacing: 3px;
 }
+
 .shop-btn {
     margin-top: 30px;
-
     padding: 15px 35px;
-
     background: gold;
-
     color: black;
-
     border: none;
-
     border-radius: 30px;
-
     font-weight: bold;
-
     cursor: pointer;
-
     transition: 0.3s;
 }
 
 .shop-btn:hover {
     transform: scale(1.05);
-  header {
+}
+
+header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 20px 50px;
-
     background: rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(8px);
-
     z-index: 1000;
 }
 
@@ -180,4 +175,20 @@ nav a {
 nav a:hover {
     color: gold;
 }
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+    padding: 10px;
+    background: rgba(255,255,255,.08);
+    border-radius: 10px;
+}
+
+.cart-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
 }
