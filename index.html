@@ -194,21 +194,42 @@
     </div>
 
     <section id="shop">
-        <h2>Featured Collection</h2>
-        <p>Your products from Tapstitch will appear here.</p>
-    </section>
+    <h2>Featured Collection</h2>
 
-    <section id="cart">
-        <h2>Your Cart 🛒</h2>
-        <p>Your selected items will appear here.</p>
-    </section>
+    <div class="products">
 
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <p>Email: wealthstyle@gmail.com</p>
-    </section>
+        <div class="product">
+            <img src="images/shirt1.jpg" alt="Wealth Style T-Shirt">
 
-    <script>
+            <h3>Wealth Style T-Shirt</h3>
+
+            <p>$35</p>
+
+            <button onclick="addToCart(
+                'Wealth Style T-Shirt',
+                'images/shirt1.jpg'
+            )">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="images/shirt2.jpg" alt="Wealth Style T-Shirt">
+
+            <h3>Wealth Style T-Shirt</h3>
+
+            <p>$35</p>
+
+            <button onclick="addToCart(
+                'Wealth Style T-Shirt',
+                'images/shirt2.jpg'
+            )">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+</section>
         // Generate random stars
         const starsContainer = document.querySelector('.stars');
         const numberOfStars = 150;
