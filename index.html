@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Themed Background</title>
+    <title>Wealth Style - Acid Wash T-Shirts</title>
     <style>
         * {
             margin: 0;
@@ -13,46 +13,117 @@
 
         body {
             width: 100%;
-            height: 100vh;
             background: #000814;
-            overflow: hidden;
             font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Desktop fixed height */
+        @media (min-width: 769px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
         }
 
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 20px 40px;
+            padding: 15px 20px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             z-index: 100;
-            gap: 60px;
         }
 
         .logo {
             color: white;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            order: 2;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
         }
 
         nav {
-            order: 1;
+            display: flex;
+            gap: 30px;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            margin-left: 25px;
             font-size: 1rem;
+            transition: color 0.3s;
         }
 
         nav a:hover {
             color: gold;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.95);
+                padding: 20px;
+                gap: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+                z-index: 99;
+            }
+
+            nav.active {
+                transform: translateX(0);
+            }
+
+            nav a {
+                padding: 15px 10px;
+                font-size: 1.1rem;
+            }
+
+            header {
+                padding: 12px 15px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
         }
 
         .space-background {
@@ -70,12 +141,16 @@
             background-repeat: repeat;
             background-size: 200px 200px;
             animation: twinkle 5s infinite;
+            z-index: 1;
         }
 
         .stars {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
 
         .star {
@@ -96,10 +171,11 @@
         }
 
         .nebula {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
             filter: blur(80px);
             opacity: 0.3;
+            z-index: 1;
         }
 
         .nebula-1 {
@@ -138,11 +214,12 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
+            padding-top: 80px;
         }
 
         h1 {
@@ -162,27 +239,36 @@
             position: relative;
             z-index: 10;
             color: white;
-            padding: 100px 50px;
+            padding: 80px 20px 40px;
             background: rgba(0, 0, 0, 0.4);
+            min-height: 100vh;
+            margin-top: 60px;
         }
 
-        #shop h2 {
+        @media (min-width: 769px) {
+            section {
+                padding: 100px 50px;
+                margin-top: 0;
+            }
+        }
+
+        #shop h2, #contact h2 {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
+            font-size: 2rem;
+            margin-bottom: 40px;
             text-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
         }
 
-        #contact h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+        @media (min-width: 769px) {
+            #shop h2, #contact h2 {
+                font-size: 2.5rem;
+            }
         }
 
         #contact p {
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
 
         #contact a {
@@ -197,33 +283,61 @@
 
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: 1fr;
+            gap: 20px;
             max-width: 1400px;
             margin: 0 auto;
+        }
+
+        @media (min-width: 640px) {
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .products {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
         }
 
         .product {
             background: rgba(138, 43, 226, 0.1);
             border: 2px solid rgba(138, 43, 226, 0.5);
             border-radius: 10px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .product:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+        @media (min-width: 769px) {
+            .product {
+                padding: 20px;
+            }
+
+            .product:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+            }
         }
 
         .image-container {
             position: relative;
             width: 100%;
-            height: 300px;
+            height: 250px;
             margin-bottom: 15px;
             border-radius: 8px;
             overflow: hidden;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        @media (min-width: 640px) {
+            .image-container {
+                height: 300px;
+            }
         }
 
         .product img {
@@ -244,12 +358,26 @@
             opacity: 0;
         }
 
-        .product:hover img.front {
-            opacity: 0;
+        /* Desktop hover effect */
+        @media (min-width: 769px) {
+            .product:hover img.front {
+                opacity: 0;
+            }
+
+            .product:hover img.back {
+                opacity: 1;
+            }
         }
 
-        .product:hover img.back {
-            opacity: 1;
+        /* Mobile tap effect */
+        @media (max-width: 768px) {
+            .image-container.flipped img.front {
+                opacity: 0;
+            }
+
+            .image-container.flipped img.back {
+                opacity: 1;
+            }
         }
 
         .view-indicator {
@@ -260,54 +388,139 @@
             color: white;
             padding: 5px 10px;
             border-radius: 5px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .view-indicator {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
         }
 
         .product h3 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-bottom: 10px;
             color: #fff;
         }
 
+        @media (min-width: 769px) {
+            .product h3 {
+                font-size: 1.5rem;
+            }
+        }
+
         .product p {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: gold;
             margin-bottom: 15px;
+        }
+
+        @media (min-width: 769px) {
+            .product p {
+                font-size: 1.3rem;
+            }
         }
 
         .product button {
             background: linear-gradient(135deg, #8a2be2, #1e90ff);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: background 0.3s ease;
+            width: 100%;
+            font-weight: bold;
         }
 
-        .product button:hover {
-            background: linear-gradient(135deg, #1e90ff, #8a2be2);
+        @media (min-width: 769px) {
+            .product button {
+                width: auto;
+                font-size: 1rem;
+            }
+
+            .product button:hover {
+                background: linear-gradient(135deg, #1e90ff, #8a2be2);
+            }
         }
 
+        .product button:active {
+            transform: scale(0.98);
+        }
+
+        /* Cart Styles */
         #cart {
             position: fixed;
-            right: 40px;
-            top: 80px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             border: 2px solid rgba(138, 43, 226, 0.8);
             border-radius: 10px;
-            padding: 20px;
-            min-width: 350px;
+            padding: 15px;
             z-index: 50;
-            max-height: 500px;
+            max-height: 300px;
             overflow-y: auto;
+        }
+
+        /* Desktop Cart */
+        @media (min-width: 769px) {
+            #cart {
+                right: 20px;
+                top: 80px;
+                min-width: 350px;
+                max-height: 500px;
+            }
+        }
+
+        /* Mobile Cart */
+        @media (max-width: 768px) {
+            #cart {
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                border-radius: 15px 15px 0 0;
+                border: 2px solid rgba(138, 43, 226, 0.8);
+                border-bottom: none;
+                max-height: 40vh;
+                transform: translateY(100%);
+                transition: transform 0.3s ease;
+            }
+
+            #cart.visible {
+                transform: translateY(0);
+            }
+
+            .cart-toggle-btn {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #8a2be2, #1e90ff);
+                color: white;
+                border: none;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 1.5rem;
+                z-index: 49;
+                box-shadow: 0 4px 15px rgba(138, 43, 226, 0.6);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
 
         #cart h2 {
             color: gold;
             margin-bottom: 10px;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+        }
+
+        @media (min-width: 769px) {
+            #cart h2 {
+                font-size: 1.3rem;
+            }
         }
 
         #cart-items {
@@ -316,35 +529,33 @@
         }
 
         .cart-item {
-            margin-bottom: 15px;
-            padding: 12px;
+            margin-bottom: 12px;
+            padding: 10px;
             background: rgba(138, 43, 226, 0.2);
             border-radius: 5px;
             border-left: 3px solid rgba(138, 43, 226, 0.8);
+            font-size: 0.9rem;
         }
 
         .cart-item-image {
             width: 100%;
-            height: 120px;
+            height: 80px;
             object-fit: cover;
             border-radius: 5px;
             margin-bottom: 8px;
-        }
-
-        .cart-item p {
-            margin-bottom: 5px;
-            font-size: 0.95rem;
         }
 
         .cart-item-name {
             color: #fff;
             font-weight: bold;
             margin-bottom: 5px;
+            font-size: 0.9rem;
         }
 
         .cart-item-price {
             color: gold;
             font-weight: bold;
+            margin-bottom: 8px;
         }
 
         #cart-total {
@@ -352,6 +563,7 @@
             border-top: 1px solid rgba(138, 43, 226, 0.5);
             padding-top: 10px;
             font-weight: bold;
+            font-size: 1rem;
         }
 
         .remove-btn {
@@ -360,13 +572,25 @@
             border: none;
             padding: 5px 10px;
             border-radius: 3px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: background 0.3s ease;
+            width: 100%;
         }
 
-        .remove-btn:hover {
+        .remove-btn:active {
             background: #ff0000;
+        }
+
+        @media (min-width: 769px) {
+            .remove-btn:hover {
+                background: #ff0000;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -374,7 +598,13 @@
     <header>
         <div class="logo">WEALTH STYLE</div>
 
-        <nav>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav id="nav">
             <a href="#home">Home</a>
             <a href="#shop">Shop</a>
             <a href="#contact">Contact</a>
@@ -400,10 +630,10 @@
         <div class="products">
             <!-- Product 1 -->
             <div class="product">
-                <div class="image-container">
+                <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png" alt="Acid Wash T-Shirt Front" class="front">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator">Hover for back</div>
+                    <div class="view-indicator" id="indicator-1">Tap for back</div>
                 </div>
                 <h3>Acid Wash T-Shirt - Color 1</h3>
                 <p>$35</p>
@@ -412,10 +642,10 @@
 
             <!-- Product 2 -->
             <div class="product">
-                <div class="image-container">
+                <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png" alt="Acid Wash T-Shirt Front" class="front">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator">Hover for back</div>
+                    <div class="view-indicator" id="indicator-2">Tap for back</div>
                 </div>
                 <h3>Acid Wash T-Shirt - Color 2</h3>
                 <p>$35</p>
@@ -424,10 +654,10 @@
 
             <!-- Product 3 -->
             <div class="product">
-                <div class="image-container">
+                <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png" alt="Acid Wash T-Shirt Front" class="front">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-6.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator">Hover for back</div>
+                    <div class="view-indicator" id="indicator-3">Tap for back</div>
                 </div>
                 <h3>Acid Wash T-Shirt - Color 3</h3>
                 <p>$35</p>
@@ -436,10 +666,10 @@
 
             <!-- Product 4 -->
             <div class="product">
-                <div class="image-container">
+                <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png" alt="Acid Wash T-Shirt Front" class="front">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-12.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator">Hover for back</div>
+                    <div class="view-indicator" id="indicator-4">Tap for back</div>
                 </div>
                 <h3>Acid Wash T-Shirt - Color 4</h3>
                 <p>$35</p>
@@ -448,10 +678,10 @@
 
             <!-- Product 5 -->
             <div class="product">
-                <div class="image-container">
+                <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png" alt="Acid Wash T-Shirt Front" class="front">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-16.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator">Hover for back</div>
+                    <div class="view-indicator" id="indicator-5">Tap for back</div>
                 </div>
                 <h3>Acid Wash T-Shirt - Color 5</h3>
                 <p>$35</p>
@@ -466,6 +696,9 @@
         <p style="margin-top: 20px; font-size: 1rem;">Feel free to reach out with any questions about our Acid Wash T-Shirts!</p>
     </section>
 
+    <!-- Mobile Cart Toggle Button -->
+    <button class="cart-toggle-btn" id="cartToggle" onclick="toggleCart()">🛒</button>
+
     <section id="cart">
         <h2>Your Cart 🛒</h2>
         <div id="cart-items">
@@ -475,6 +708,62 @@
     </section>
 
     <script>
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        // Close menu when link clicked
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+
+        // Mobile Cart Toggle
+        const isMobile = () => window.innerWidth <= 768;
+        const cartSection = document.getElementById('cart');
+        const cartToggle = document.getElementById('cartToggle');
+
+        function toggleCart() {
+            if (isMobile()) {
+                cartSection.classList.toggle('visible');
+            }
+        }
+
+        // Hide cart toggle on desktop
+        window.addEventListener('resize', () => {
+            if (!isMobile()) {
+                cartToggle.style.display = 'none';
+                cartSection.classList.remove('visible');
+            } else {
+                cartToggle.style.display = 'flex';
+            }
+        });
+
+        if (!isMobile()) {
+            cartToggle.style.display = 'none';
+        }
+
+        // Image flip for mobile
+        function toggleImage(container) {
+            if (isMobile()) {
+                container.classList.toggle('flipped');
+                const indicator = container.querySelector('.view-indicator');
+                if (container.classList.contains('flipped')) {
+                    indicator.textContent = 'Tap for front';
+                } else {
+                    indicator.textContent = 'Tap for back';
+                }
+            }
+        }
+
+        // Shopping Cart
         let cartItems = [];
         let cartTotal = 0;
 
@@ -482,6 +771,11 @@
             cartItems.push({ name: productName, image: productImage, price: price });
             cartTotal += price;
             updateCart();
+            
+            // Show cart on mobile
+            if (isMobile()) {
+                cartSection.classList.add('visible');
+            }
         }
 
         function updateCart() {
