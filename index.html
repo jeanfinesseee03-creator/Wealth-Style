@@ -165,26 +165,109 @@
             padding: 100px 50px;
             background: rgba(0, 0, 0, 0.4);
         }
+
+        #shop h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product {
+            background: rgba(138, 43, 226, 0.1);
+            border: 2px solid rgba(138, 43, 226, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+        }
+
+        .product img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .product p {
+            font-size: 1.3rem;
+            color: gold;
+            margin-bottom: 15px;
+        }
+
+        .product button {
+            background: linear-gradient(135deg, #8a2be2, #1e90ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .product button:hover {
+            background: linear-gradient(135deg, #1e90ff, #8a2be2);
+        }
+
+        #cart {
+            position: fixed;
+            right: 40px;
+            top: 80px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(138, 43, 226, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 300px;
+            z-index: 50;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #cart h2 {
+            color: gold;
+            margin-bottom: 10px;
+        }
+
+        #cart-items {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+
+        #cart-total {
+            color: gold;
+            border-top: 1px solid rgba(138, 43, 226, 0.5);
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo-text">WEALTH STYLE</div>
+        <div class="logo">WEALTH STYLE</div>
 
         <nav>
             <a href="#home">Home</a>
             <a href="#shop">Shop</a>
-            <section id="cart">
-    <h2>Your Cart 🛒</h2>
-
-    <div id="cart-items">
-        <p>Your cart is empty.</p>
-    </div>
-
-    <h3 id="cart-total">
-        Total: $0
-    </h3>
-</section>
             <a href="#contact">Contact</a>
         </nav>
     </header>
@@ -204,42 +287,123 @@
     </div>
 
     <section id="shop">
-    <h2>Featured Collection</h2>
+        <h2>Acid Wash Oversize T-Shirt Collection</h2>
+        <div class="products">
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png" alt="Acid Wash T-Shirt 1">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 1', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png', 45)">Add to Cart</button>
+            </div>
 
-    <div class="products">
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png" alt="Acid Wash T-Shirt 2">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 2', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png', 45)">Add to Cart</button>
+            </div>
 
-        <div class="product">
-            <img src="images/shirt1.jpg" alt="Wealth Style T-Shirt">
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png" alt="Acid Wash T-Shirt 3">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 3', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png', 45)">Add to Cart</button>
+            </div>
 
-            <h3>Wealth Style T-Shirt</h3>
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png" alt="Acid Wash T-Shirt 4">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 4', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png', 45)">Add to Cart</button>
+            </div>
 
-            <p>$35</p>
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png" alt="Acid Wash T-Shirt 5">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 5', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png', 45)">Add to Cart</button>
+            </div>
 
-            <button onclick="addToCart(
-                'Wealth Style T-Shirt',
-                'images/shirt1.jpg'
-            )">
-                Add to Cart
-            </button>
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-6.png" alt="Acid Wash T-Shirt 6">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 6', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-6.png', 45)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png" alt="Acid Wash T-Shirt 7">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 7', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png', 45)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-12.png" alt="Acid Wash T-Shirt 8">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 8', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-12.png', 45)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png" alt="Acid Wash T-Shirt 9">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 9', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png', 45)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-16.png" alt="Acid Wash T-Shirt 10">
+                <h3>Acid Wash T-Shirt</h3>
+                <p>$45</p>
+                <button onclick="addToCart('Acid Wash T-Shirt - Mockup 10', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-16.png', 45)">Add to Cart</button>
+            </div>
         </div>
+    </section>
 
-        <div class="product">
-            <img src="images/shirt2.jpg" alt="Wealth Style T-Shirt">
-
-            <h3>Wealth Style T-Shirt</h3>
-
-            <p>$35</p>
-
-            <button onclick="addToCart(
-                'Wealth Style T-Shirt',
-                'images/shirt2.jpg'
-            )">
-                Add to Cart
-            </button>
+    <section id="cart">
+        <h2>Your Cart 🛒</h2>
+        <div id="cart-items">
+            <p>Your cart is empty.</p>
         </div>
+        <h3 id="cart-total">Total: $0</h3>
+    </section>
 
-    </div>
-</section>
+    <script>
+        let cartItems = [];
+        let cartTotal = 0;
+
+        function addToCart(productName, productImage, price) {
+            cartItems.push({ name: productName, image: productImage, price: price });
+            cartTotal += price;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            const cartTotalDiv = document.getElementById('cart-total');
+            
+            if (cartItems.length === 0) {
+                cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                cartItemsDiv.innerHTML = cartItems.map((item, index) => `
+                    <div style="margin-bottom: 10px; padding: 10px; background: rgba(138, 43, 226, 0.2); border-radius: 5px;">
+                        <p><strong>${item.name}</strong></p>
+                        <p>$${item.price}</p>
+                        <button onclick="removeFromCart(${index})" style="background: #dc143c; padding: 5px 10px; font-size: 0.9rem;">Remove</button>
+                    </div>
+                `).join('');
+            }
+            
+            cartTotalDiv.textContent = `Total: $${cartTotal}`;
+        }
+
+        function removeFromCart(index) {
+            cartTotal -= cartItems[index].price;
+            cartItems.splice(index, 1);
+            updateCart();
+        }
+
         // Generate random stars
         const starsContainer = document.querySelector('.stars');
         const numberOfStars = 150;
