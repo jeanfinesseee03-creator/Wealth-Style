@@ -14,9 +14,16 @@ function addToCart(name, image) {
 
 function updateCart() {
 
-    const cartContainer =
-        document.getElementById("cart-items");
+const cartOverlay = document.getElementById("cart-overlay");
 
+function toggleCart() {
+    cartOverlay.classList.toggle("active");
+}
+cartOverlay.addEventListener("click", (e) => {
+    if (e.target === cartOverlay) {
+        cartOverlay.classList.remove("active");
+    }
+});
     const totalElement =
         document.getElementById("cart-total");
 
