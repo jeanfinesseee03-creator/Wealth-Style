@@ -1,4 +1,3 @@
-
 let cart = [];
 
 function addToCart(name, image) {
@@ -67,3 +66,4 @@ cartOverlay.addEventListener("click", (e) => {
     totalElement.innerHTML =
         `Total: $${total}`;
 }
+
