@@ -18,7 +18,6 @@
             overflow-x: hidden;
         }
 
-        /* Desktop fixed height */
         @media (min-width: 769px) {
             body {
                 height: 100vh;
@@ -88,7 +87,6 @@
             color: gold;
         }
 
-        /* Mobile Navigation */
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -132,8 +130,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+            background: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 60px 70px, #fff, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 50px 50px, #fff, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0)),
@@ -358,7 +355,6 @@
             opacity: 0;
         }
 
-        /* Desktop hover effect */
         @media (min-width: 769px) {
             .product:hover img.front {
                 opacity: 0;
@@ -369,7 +365,6 @@
             }
         }
 
-        /* Mobile tap effect */
         @media (max-width: 768px) {
             .image-container.flipped img.front {
                 opacity: 0;
@@ -450,7 +445,6 @@
             transform: scale(0.98);
         }
 
-        /* Cart Styles */
         #cart {
             position: fixed;
             background: rgba(0, 0, 0, 0.95);
@@ -462,7 +456,6 @@
             overflow-y: auto;
         }
 
-        /* Desktop Cart */
         @media (min-width: 769px) {
             #cart {
                 right: 20px;
@@ -472,7 +465,6 @@
             }
         }
 
-        /* Mobile Cart */
         @media (max-width: 768px) {
             #cart {
                 bottom: 0;
@@ -503,7 +495,7 @@
                 border-radius: 50%;
                 cursor: pointer;
                 font-size: 1.5rem;
-                z-index: 49;
+                z-index: 60;
                 box-shadow: 0 4px 15px rgba(138, 43, 226, 0.6);
                 display: flex;
                 align-items: center;
@@ -564,6 +556,7 @@
             padding-top: 10px;
             font-weight: bold;
             font-size: 1rem;
+            margin-bottom: 12px;
         }
 
         .remove-btn {
@@ -588,7 +581,114 @@
             }
         }
 
-        /* Smooth scrolling */
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #1e90ff, #8a2be2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .checkout-btn:not(:disabled):hover {
+            transform: translateY(-1px);
+        }
+
+        .checkout-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .checkout-modal.active {
+            display: flex;
+        }
+
+        .checkout-modal-content {
+            width: min(500px, 100%);
+            background: #0d1324;
+            border: 2px solid rgba(138, 43, 226, 0.8);
+            border-radius: 12px;
+            padding: 22px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        .checkout-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .checkout-modal-content h3 {
+            color: gold;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+        }
+
+        .checkout-modal-content p {
+            color: #d6d6d6;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        #checkout-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #checkout-form input,
+        #checkout-form textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
+            color: white;
+            font-size: 0.95rem;
+        }
+
+        #checkout-form textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .checkout-summary {
+            color: gold;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 4px;
+        }
+
+        #checkout-submit {
+            background: linear-gradient(135deg, #8a2be2, #1e90ff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -628,7 +728,6 @@
     <section id="shop">
         <h2>Acid Wash Oversize T-Shirt Collection</h2>
         <div class="products">
-            <!-- Product 1 -->
             <div class="product">
                 <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png" alt="Acid Wash T-Shirt Front" class="front">
@@ -640,7 +739,6 @@
                 <button onclick="addToCart('Acid Wash T-Shirt - Color 1', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png', 35)">Add to Cart</button>
             </div>
 
-            <!-- Product 2 -->
             <div class="product">
                 <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png" alt="Acid Wash T-Shirt Front" class="front">
@@ -652,7 +750,6 @@
                 <button onclick="addToCart('Acid Wash T-Shirt - Color 2', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png', 35)">Add to Cart</button>
             </div>
 
-            <!-- Product 3 -->
             <div class="product">
                 <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png" alt="Acid Wash T-Shirt Front" class="front">
@@ -664,7 +761,6 @@
                 <button onclick="addToCart('Acid Wash T-Shirt - Color 3', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png', 35)">Add to Cart</button>
             </div>
 
-            <!-- Product 4 -->
             <div class="product">
                 <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png" alt="Acid Wash T-Shirt Front" class="front">
@@ -676,7 +772,6 @@
                 <button onclick="addToCart('Acid Wash T-Shirt - Color 4', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png', 35)">Add to Cart</button>
             </div>
 
-            <!-- Product 5 -->
             <div class="product">
                 <div class="image-container" onclick="toggleImage(this)">
                     <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png" alt="Acid Wash T-Shirt Front" class="front">
@@ -696,21 +791,35 @@
         <p style="margin-top: 20px; font-size: 1rem;">Feel free to reach out with any questions about our Acid Wash T-Shirts!</p>
     </section>
 
-    <!-- Mobile Cart Toggle Button -->
     <button class="cart-toggle-btn" id="cartToggle" onclick="toggleCart()">🛒</button>
 
-  <div id="cart-overlay">
-    <section id="cart">
-        <h2>Your Cart 🛒</h2>
-        <div id="cart-items">
-            <p>Your cart is empty.</p>
+    <div id="cart-overlay">
+        <section id="cart">
+            <h2>Your Cart 🛒</h2>
+            <div id="cart-items">
+                <p>Your cart is empty.</p>
+            </div>
+            <h3 id="cart-total">Total: $0</h3>
+            <button id="checkout-btn" class="checkout-btn" onclick="openCheckout()" disabled>Checkout</button>
+        </section>
+    </div>
+
+    <div id="checkout-modal" class="checkout-modal" aria-modal="true" role="dialog">
+        <div class="checkout-modal-content">
+            <button class="checkout-close" type="button" onclick="closeCheckout()" aria-label="Close checkout">×</button>
+            <h3>Checkout</h3>
+            <p>Payment processing will be connected here soon. This is a ready-to-use checkout flow for your store.</p>
+            <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)">
+                <input type="text" id="customer-name" placeholder="Full name" required>
+                <input type="email" id="customer-email" placeholder="Email address" required>
+                <textarea id="customer-notes" placeholder="Delivery notes or sizing details"></textarea>
+                <div class="checkout-summary">Total: <span id="checkout-total">$0</span></div>
+                <button type="submit" id="checkout-submit">Continue to payment</button>
+            </form>
         </div>
-        <h3 id="cart-total">Total: $0</h3>
-    </section>
-</div>
+    </div>
 
     <script>
-        // Mobile Navigation
         const hamburger = document.getElementById('hamburger');
         const nav = document.getElementById('nav');
 
@@ -719,7 +828,6 @@
             nav.classList.toggle('active');
         });
 
-        // Close menu when link clicked
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -727,10 +835,13 @@
             });
         });
 
-        // Mobile Cart Toggle
         const isMobile = () => window.innerWidth <= 768;
         const cartSection = document.getElementById('cart');
         const cartToggle = document.getElementById('cartToggle');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutTotal = document.getElementById('checkout-total');
 
         function toggleCart() {
             if (isMobile()) {
@@ -738,21 +849,28 @@
             }
         }
 
-        // Hide cart toggle on desktop
+        cartOverlay.addEventListener('click', (e) => {
+            if (e.target === cartOverlay) {
+                cartOverlay.style.display = 'none';
+            }
+        });
+
         window.addEventListener('resize', () => {
             if (!isMobile()) {
                 cartToggle.style.display = 'none';
                 cartSection.classList.remove('visible');
+                cartOverlay.style.display = 'flex';
             } else {
                 cartToggle.style.display = 'flex';
+                cartOverlay.style.display = 'none';
             }
         });
 
         if (!isMobile()) {
             cartToggle.style.display = 'none';
+            cartOverlay.style.display = 'flex';
         }
 
-        // Image flip for mobile
         function toggleImage(container) {
             if (isMobile()) {
                 container.classList.toggle('flipped');
@@ -765,7 +883,6 @@
             }
         }
 
-        // Shopping Cart
         let cartItems = [];
         let cartTotal = 0;
 
@@ -773,8 +890,7 @@
             cartItems.push({ name: productName, image: productImage, price: price });
             cartTotal += price;
             updateCart();
-            
-            // Show cart on mobile
+
             if (isMobile()) {
                 cartSection.classList.add('visible');
             }
@@ -783,21 +899,30 @@
         function updateCart() {
             const cartItemsDiv = document.getElementById('cart-items');
             const cartTotalDiv = document.getElementById('cart-total');
-            
+
             if (cartItems.length === 0) {
                 cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
-            } else {
-                cartItemsDiv.innerHTML = cartItems.map((item, index) => `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                        <p class="cart-item-name">${item.name}</p>
-                        <p class="cart-item-price">$${item.price}</p>
-                        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
-                    </div>
-                `).join('');
+                cartTotalDiv.textContent = 'Total: $0';
+                checkoutBtn.disabled = true;
+                checkoutBtn.style.opacity = '0.5';
+                checkoutBtn.style.cursor = 'not-allowed';
+                return;
             }
-            
+
+            cartItemsDiv.innerHTML = cartItems.map((item, index) => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <p class="cart-item-name">${item.name}</p>
+                    <p class="cart-item-price">$${item.price}</p>
+                    <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+                </div>
+            `).join('');
+
             cartTotalDiv.textContent = `Total: $${cartTotal}`;
+            checkoutTotal.textContent = `$${cartTotal}`;
+            checkoutBtn.disabled = false;
+            checkoutBtn.style.opacity = '1';
+            checkoutBtn.style.cursor = 'pointer';
         }
 
         function removeFromCart(index) {
@@ -806,14 +931,46 @@
             updateCart();
         }
 
-        // Generate random stars
+        function openCheckout() {
+            if (cartItems.length === 0) return;
+            checkoutTotal.textContent = `$${cartTotal}`;
+            checkoutModal.classList.add('active');
+        }
+
+        function closeCheckout() {
+            checkoutModal.classList.remove('active');
+            document.getElementById('checkout-form').reset();
+        }
+
+        checkoutModal.addEventListener('click', (e) => {
+            if (e.target === checkoutModal) {
+                closeCheckout();
+            }
+        });
+
+        function handleCheckoutSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('customer-name').value.trim();
+            const email = document.getElementById('customer-email').value.trim();
+
+            if (!name || !email) {
+                return;
+            }
+
+            alert(`Thanks ${name}! Your checkout is ready for payment integration. We will connect Stripe/PayPal next.`);
+            cartItems = [];
+            cartTotal = 0;
+            updateCart();
+            closeCheckout();
+        }
+
         const starsContainer = document.querySelector('.stars');
         const numberOfStars = 100;
 
         for (let i = 0; i < numberOfStars; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
-            
+
             const size = Math.random() * 3 + 0.5;
             const x = Math.random() * 100;
             const y = Math.random() * 100;
