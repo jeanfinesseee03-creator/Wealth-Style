@@ -4,27 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wealth Style - Acid Wash T-Shirts</title>
+    <meta name="description" content="Wealth Style: oversized 250 GSM acid wash t-shirts. Wear your wealth.">
+    <meta name="theme-color" content="#000814">
+    <meta property="og:title" content="Wealth Style - Acid Wash T-Shirts">
+    <meta property="og:description" content="Oversized 250 GSM acid wash t-shirts. Wear your wealth.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 70px; /* keeps section titles clear of the fixed header */
         }
 
         body {
-            width: 100%;
             background: #000814;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             overflow-x: hidden;
+            color: #fff;
         }
 
-        @media (min-width: 769px) {
-            body {
-                height: 100vh;
-                overflow: hidden;
-            }
-        }
+        :focus-visible { outline: 3px solid gold; outline-offset: 2px; }
 
+        /* ---------- Header / nav ---------- */
         header {
             position: fixed;
             top: 0;
@@ -38,17 +40,16 @@
             z-index: 100;
         }
 
-        .logo {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+        .logo { color: white; font-size: 1.5rem; font-weight: bold; }
 
         .hamburger {
             display: none;
             flex-direction: column;
-            cursor: pointer;
             gap: 5px;
+            background: none;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
         }
 
         .hamburger span {
@@ -59,42 +60,23 @@
             transition: 0.3s;
         }
 
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
 
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
+        nav { display: flex; gap: 30px; }
 
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        nav {
-            display: flex;
-            gap: 30px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: gold;
-        }
+        nav a { color: white; text-decoration: none; transition: color 0.3s; }
+        nav a:hover { color: gold; }
 
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
+            header { padding: 12px 15px; }
+            .logo { font-size: 1.2rem; }
+            .hamburger { display: flex; }
 
             nav {
                 position: fixed;
-                top: 60px;
+                top: 56px;
                 left: 0;
                 width: 100%;
                 flex-direction: column;
@@ -102,53 +84,32 @@
                 padding: 20px;
                 gap: 0;
                 transform: translateX(-100%);
-                transition: transform 0.3s;
+                visibility: hidden;
+                transition: transform 0.3s, visibility 0.3s;
                 z-index: 99;
             }
 
-            nav.active {
-                transform: translateX(0);
-            }
-
-            nav a {
-                padding: 15px 10px;
-                font-size: 1.1rem;
-            }
-
-            header {
-                padding: 12px 15px;
-            }
-
-            .logo {
-                font-size: 1.2rem;
-            }
+            nav.active { transform: translateX(0); visibility: visible; }
+            nav a { padding: 15px 10px; font-size: 1.1rem; }
         }
 
+        /* ---------- Space background ---------- */
         .space-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+            inset: 0;
+            background:
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 60px 70px, #fff, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 50px 50px, #fff, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 90px 10px, #fff, rgba(0,0,0,0));
-            background-repeat: repeat;
             background-size: 200px 200px;
             animation: twinkle 5s infinite;
             z-index: 1;
+            pointer-events: none;
         }
 
-        .stars {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
+        .stars { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
 
         .star {
             position: absolute;
@@ -157,15 +118,9 @@
             animation: twinkle-star 3s infinite;
         }
 
-        @keyframes twinkle-star {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
+        @keyframes twinkle-star { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, 30px); } }
 
         .nebula {
             position: fixed;
@@ -173,111 +128,102 @@
             filter: blur(80px);
             opacity: 0.3;
             z-index: 1;
+            pointer-events: none;
         }
 
         .nebula-1 {
-            width: 400px;
-            height: 400px;
+            width: 400px; height: 400px;
             background: radial-gradient(circle, rgba(138, 43, 226, 0.5) 0%, transparent 70%);
-            top: 10%;
-            left: 10%;
+            top: 10%; left: 10%;
             animation: float 20s infinite ease-in-out;
         }
-
         .nebula-2 {
-            width: 300px;
-            height: 300px;
+            width: 300px; height: 300px;
             background: radial-gradient(circle, rgba(30, 144, 255, 0.4) 0%, transparent 70%);
-            top: 50%;
-            right: 10%;
+            top: 50%; right: 10%;
             animation: float 25s infinite ease-in-out reverse;
         }
-
         .nebula-3 {
-            width: 350px;
-            height: 350px;
+            width: 350px; height: 350px;
             background: radial-gradient(circle, rgba(220, 20, 60, 0.3) 0%, transparent 70%);
-            bottom: 10%;
-            left: 50%;
+            bottom: 10%; left: 50%;
             animation: float 30s infinite ease-in-out;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, 30px); }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .space-background, .star, .nebula { animation: none; }
         }
 
-        .content {
+        /* ---------- Hero ---------- */
+        .hero {
             position: relative;
             z-index: 10;
-            width: 100%;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 80px;
+            padding: 80px 20px 20px;
         }
 
-        h1 {
-            color: #fff;
-            font-size: 3rem;
+        .hero h1 {
+            font-size: clamp(2.2rem, 8vw, 4rem);
             text-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
             margin-bottom: 20px;
         }
 
-        p {
+        .hero p {
             color: #ccc;
             font-size: 1.2rem;
             text-shadow: 0 0 10px rgba(30, 144, 255, 0.6);
+            margin-bottom: 28px;
         }
 
-        section {
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #8a2be2, #1e90ff);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: scale(0.98); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* ---------- Sections ---------- */
+        .page-section {
             position: relative;
             z-index: 10;
-            color: white;
-            padding: 80px 20px 40px;
+            padding: 80px 20px 60px;
             background: rgba(0, 0, 0, 0.4);
-            min-height: 100vh;
-            margin-top: 60px;
         }
 
         @media (min-width: 769px) {
-            section {
-                padding: 100px 50px;
-                margin-top: 0;
-            }
+            .page-section { padding: 100px 50px 80px; }
         }
 
-        #shop h2, #contact h2 {
+        .page-section h2 {
             text-align: center;
             font-size: 2rem;
             margin-bottom: 40px;
             text-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
         }
 
-        @media (min-width: 769px) {
-            #shop h2, #contact h2 {
-                font-size: 2.5rem;
-            }
-        }
+        @media (min-width: 769px) { .page-section h2 { font-size: 2.5rem; } }
 
-        #contact p {
-            text-align: center;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
+        #contact { min-height: 50vh; }
+        #contact p { text-align: center; color: #ccc; font-size: 1.1rem; margin-bottom: 10px; }
+        #contact a { color: gold; font-weight: bold; text-decoration: none; }
+        #contact a:hover { text-decoration: underline; }
 
-        #contact a {
-            color: gold;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        #contact a:hover {
-            text-decoration: underline;
-        }
-
+        /* ---------- Products ---------- */
         .products {
             display: grid;
             grid-template-columns: 1fr;
@@ -286,18 +232,9 @@
             margin: 0 auto;
         }
 
-        @media (min-width: 640px) {
-            .products {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-        }
-
+        @media (min-width: 640px) { .products { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 1024px) {
-            .products {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 30px;
-            }
+            .products { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         }
 
         .product {
@@ -309,218 +246,159 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        @media (min-width: 769px) {
-            .product {
-                padding: 20px;
-            }
-
-            .product:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
-            }
+        @media (hover: hover) {
+            .product:hover { transform: translateY(-8px); box-shadow: 0 0 20px rgba(138, 43, 226, 0.8); }
         }
 
         .image-container {
             position: relative;
+            display: block;
             width: 100%;
-            height: 250px;
+            aspect-ratio: 1 / 1;
             margin-bottom: 15px;
+            border: none;
             border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
             background: rgba(0, 0, 0, 0.2);
         }
 
-        @media (min-width: 640px) {
-            .image-container {
-                height: 300px;
-            }
-        }
-
-        .product img {
+        .image-container img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             transition: opacity 0.3s ease;
         }
 
-        .product img.front {
-            opacity: 1;
-        }
-
-        .product img.back {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-        }
-
-        @media (min-width: 769px) {
-            .product:hover img.front {
-                opacity: 0;
-            }
-
-            .product:hover img.back {
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .image-container.flipped img.front {
-                opacity: 0;
-            }
-
-            .image-container.flipped img.back {
-                opacity: 1;
-            }
-        }
+        .image-container img.back { opacity: 0; }
+        .image-container.flipped img.front { opacity: 0; }
+        .image-container.flipped img.back { opacity: 1; }
 
         .view-indicator {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             color: white;
             padding: 5px 10px;
             border-radius: 5px;
             font-size: 0.75rem;
         }
 
-        @media (max-width: 768px) {
-            .view-indicator {
-                font-size: 0.7rem;
-                padding: 4px 8px;
-            }
+        .product h3 { font-size: 1.2rem; margin-bottom: 8px; }
+        .product .price { font-size: 1.15rem; color: gold; margin-bottom: 12px; }
+
+        .size-picker {
+            border: none;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 14px;
         }
 
-        .product h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #fff;
+        .size-picker legend {
+            color: #ccc;
+            font-size: 0.85rem;
+            margin: 0 auto 8px;
         }
 
-        @media (min-width: 769px) {
-            .product h3 {
-                font-size: 1.5rem;
-            }
+        .size-picker label { cursor: pointer; }
+        .size-picker input { position: absolute; opacity: 0; pointer-events: none; }
+
+        .size-picker span {
+            display: inline-block;
+            min-width: 44px;
+            padding: 8px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 5px;
+            font-size: 0.9rem;
         }
 
-        .product p {
-            font-size: 1.1rem;
-            color: gold;
-            margin-bottom: 15px;
-        }
+        .size-picker input:checked + span { background: gold; color: #000; border-color: gold; font-weight: bold; }
+        .size-picker input:focus-visible + span { outline: 3px solid #1e90ff; outline-offset: 2px; }
 
-        @media (min-width: 769px) {
-            .product p {
-                font-size: 1.3rem;
-            }
-        }
+        .product .btn { width: 100%; }
 
-        .product button {
+        .size-error { color: #ff6b81; font-size: 0.85rem; min-height: 1.2em; margin-bottom: 6px; }
+
+        /* ---------- Cart drawer ---------- */
+        .cart-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
             background: linear-gradient(135deg, #8a2be2, #1e90ff);
             color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
+            font-size: 1.5rem;
             cursor: pointer;
-            font-size: 0.95rem;
-            transition: background 0.3s ease;
-            width: 100%;
+            z-index: 60;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 5px;
+            border-radius: 11px;
+            background: gold;
+            color: #000;
+            font-size: 0.8rem;
             font-weight: bold;
+            display: none;
+            align-items: center;
+            justify-content: center;
         }
 
-        @media (min-width: 769px) {
-            .product button {
-                width: auto;
-                font-size: 1rem;
-            }
-
-            .product button:hover {
-                background: linear-gradient(135deg, #1e90ff, #8a2be2);
-            }
-        }
-
-        .product button:active {
-            transform: scale(0.98);
-        }
+        .cart-count.show { display: flex; }
 
         #cart {
             position: fixed;
-            background: rgba(0, 0, 0, 0.95);
-            border: 2px solid rgba(138, 43, 226, 0.8);
-            border-radius: 10px;
-            padding: 15px;
-            z-index: 50;
-            max-height: 300px;
-            overflow-y: auto;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: min(380px, 100%);
+            background: rgba(0, 8, 20, 0.97);
+            border-left: 2px solid rgba(138, 43, 226, 0.8);
+            padding: 20px 15px;
+            z-index: 150;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            visibility: hidden;
+            transition: transform 0.3s ease, visibility 0.3s;
         }
 
-        @media (min-width: 769px) {
-            #cart {
-                right: 20px;
-                top: 80px;
-                min-width: 350px;
-                max-height: 500px;
-            }
+        #cart.visible { transform: translateX(0); visibility: visible; }
+
+        .cart-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .cart-head h2 { color: gold; font-size: 1.3rem; }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 4px 8px;
         }
 
-        @media (max-width: 768px) {
-            #cart {
-                bottom: 0;
-                left: 0;
-                right: 0;
-                width: 100%;
-                border-radius: 15px 15px 0 0;
-                border: 2px solid rgba(138, 43, 226, 0.8);
-                border-bottom: none;
-                max-height: 40vh;
-                transform: translateY(100%);
-                transition: transform 0.3s ease;
-            }
-
-            #cart.visible {
-                transform: translateY(0);
-            }
-
-            .cart-toggle-btn {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #8a2be2, #1e90ff);
-                color: white;
-                border: none;
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                cursor: pointer;
-                font-size: 1.5rem;
-                z-index: 60;
-                box-shadow: 0 4px 15px rgba(138, 43, 226, 0.6);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-
-        #cart h2 {
-            color: gold;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-
-        @media (min-width: 769px) {
-            #cart h2 {
-                font-size: 1.3rem;
-            }
-        }
-
-        #cart-items {
-            margin-bottom: 15px;
-            color: #ccc;
-        }
+        #cart-items { flex: 1; overflow-y: auto; margin-bottom: 15px; color: #ccc; }
 
         .cart-item {
+            display: flex;
+            gap: 10px;
             margin-bottom: 12px;
             padding: 10px;
             background: rgba(138, 43, 226, 0.2);
@@ -529,37 +407,26 @@
             font-size: 0.9rem;
         }
 
-        .cart-item-image {
-            width: 100%;
-            height: 80px;
-            object-fit: cover;
+        .cart-item-image { width: 70px; height: 70px; object-fit: contain; border-radius: 5px; background: rgba(0,0,0,0.3); }
+        .cart-item-info { flex: 1; }
+        .cart-item-name { color: #fff; font-weight: bold; margin-bottom: 3px; }
+        .cart-item-meta { color: #ccc; font-size: 0.85rem; margin-bottom: 6px; }
+        .cart-item-price { color: gold; font-weight: bold; }
+
+        .qty-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+
+        .qty-btn {
+            width: 28px; height: 28px;
             border-radius: 5px;
-            margin-bottom: 8px;
-        }
-
-        .cart-item-name {
-            color: #fff;
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        .cart-item-price {
-            color: gold;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        #cart-total {
-            color: gold;
-            border-top: 1px solid rgba(138, 43, 226, 0.5);
-            padding-top: 10px;
-            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.4);
+            background: transparent;
+            color: white;
+            cursor: pointer;
             font-size: 1rem;
-            margin-bottom: 12px;
         }
 
         .remove-btn {
+            margin-left: auto;
             background: #dc143c;
             color: white;
             border: none;
@@ -567,41 +434,28 @@
             border-radius: 3px;
             font-size: 0.8rem;
             cursor: pointer;
-            transition: background 0.3s ease;
-            width: 100%;
         }
 
-        .remove-btn:active {
-            background: #ff0000;
+        #cart-total {
+            color: gold;
+            border-top: 1px solid rgba(138, 43, 226, 0.5);
+            padding-top: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
         }
 
-        @media (min-width: 769px) {
-            .remove-btn:hover {
-                background: #ff0000;
-            }
-        }
+        #cart .btn { width: 100%; }
 
-        .checkout-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #1e90ff, #8a2be2);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s ease, opacity 0.2s ease;
+        .cart-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 140;
+            display: none;
         }
+        .cart-backdrop.show { display: block; }
 
-        .checkout-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .checkout-btn:not(:disabled):hover {
-            transform: translateY(-1px);
-        }
-
+        /* ---------- Checkout modal ---------- */
         .checkout-modal {
             position: fixed;
             inset: 0;
@@ -612,13 +466,12 @@
             z-index: 1000;
             padding: 20px;
         }
-
-        .checkout-modal.active {
-            display: flex;
-        }
+        .checkout-modal.active { display: flex; }
 
         .checkout-modal-content {
             width: min(500px, 100%);
+            max-height: 100%;
+            overflow-y: auto;
             background: #0d1324;
             border: 2px solid rgba(138, 43, 226, 0.8);
             border-radius: 12px;
@@ -627,84 +480,40 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
         }
 
-        .checkout-close {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            border: none;
-            background: transparent;
-            color: white;
-            font-size: 1.8rem;
-            cursor: pointer;
-        }
+        .checkout-modal-content .icon-btn { position: absolute; top: 10px; right: 10px; }
+        .checkout-modal-content h3 { color: gold; margin-bottom: 12px; font-size: 1.5rem; }
+        .checkout-modal-content p { color: #d6d6d6; font-size: 0.95rem; margin-bottom: 16px; }
 
-        .checkout-modal-content h3 {
-            color: gold;
-            margin-bottom: 12px;
-            font-size: 1.5rem;
-        }
-
-        .checkout-modal-content p {
-            color: #d6d6d6;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-        }
-
-        #checkout-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        #checkout-form { display: flex; flex-direction: column; gap: 12px; }
 
         #checkout-form input,
         #checkout-form textarea {
             width: 100%;
             padding: 12px 14px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
             color: white;
-            font-size: 0.95rem;
+            font-size: 1rem; /* 16px stops iPhones zooming into the field */
+            font-family: inherit;
         }
 
-        #checkout-form textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
+        #checkout-form textarea { min-height: 90px; resize: vertical; }
 
-        .checkout-summary {
-            color: gold;
-            font-weight: bold;
-            font-size: 1rem;
-            margin-top: 4px;
-        }
+        .checkout-summary { color: gold; font-weight: bold; }
 
-        #checkout-submit {
-            background: linear-gradient(135deg, #8a2be2, #1e90ff);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        .order-lines { color: #ccc; font-size: 0.9rem; margin-bottom: 4px; padding-left: 18px; }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">WEALTH STYLE</div>
 
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+            <span></span><span></span><span></span>
+        </button>
 
-        <nav id="nav">
+        <nav id="nav" aria-label="Main">
             <a href="#home">Home</a>
             <a href="#shop">Shop</a>
             <a href="#contact">Contact</a>
@@ -713,277 +522,314 @@
 
     <div class="space-background"></div>
     <div class="stars"></div>
-
     <div class="nebula nebula-1"></div>
     <div class="nebula nebula-2"></div>
     <div class="nebula nebula-3"></div>
 
-    <div class="content" id="home">
-        <div>
-            <h1>WEALTH STYLE</h1>
-            <p>Wear Your Wealth</p>
-        </div>
-    </div>
-
-    <section id="shop">
-        <h2>Acid Wash Oversize T-Shirt Collection</h2>
-        <div class="products">
-            <div class="product">
-                <div class="image-container" onclick="toggleImage(this)">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png" alt="Acid Wash T-Shirt Front" class="front">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator" id="indicator-1">Tap for back</div>
-                </div>
-                <h3>Acid Wash T-Shirt - Color 1</h3>
-                <p>$35</p>
-                <button onclick="addToCart('Acid Wash T-Shirt - Color 1', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png', 35)">Add to Cart</button>
-            </div>
-
-            <div class="product">
-                <div class="image-container" onclick="toggleImage(this)">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png" alt="Acid Wash T-Shirt Front" class="front">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator" id="indicator-2">Tap for back</div>
-                </div>
-                <h3>Acid Wash T-Shirt - Color 2</h3>
-                <p>$35</p>
-                <button onclick="addToCart('Acid Wash T-Shirt - Color 2', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png', 35)">Add to Cart</button>
-            </div>
-
-            <div class="product">
-                <div class="image-container" onclick="toggleImage(this)">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png" alt="Acid Wash T-Shirt Front" class="front">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-6.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator" id="indicator-3">Tap for back</div>
-                </div>
-                <h3>Acid Wash T-Shirt - Color 3</h3>
-                <p>$35</p>
-                <button onclick="addToCart('Acid Wash T-Shirt - Color 3', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png', 35)">Add to Cart</button>
-            </div>
-
-            <div class="product">
-                <div class="image-container" onclick="toggleImage(this)">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png" alt="Acid Wash T-Shirt Front" class="front">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-12.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator" id="indicator-4">Tap for back</div>
-                </div>
-                <h3>Acid Wash T-Shirt - Color 4</h3>
-                <p>$35</p>
-                <button onclick="addToCart('Acid Wash T-Shirt - Color 4', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png', 35)">Add to Cart</button>
-            </div>
-
-            <div class="product">
-                <div class="image-container" onclick="toggleImage(this)">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png" alt="Acid Wash T-Shirt Front" class="front">
-                    <img src="Acid Wash Oversize T-Shirt - 250 GSM-mockups-16.png" alt="Acid Wash T-Shirt Back" class="back">
-                    <div class="view-indicator" id="indicator-5">Tap for back</div>
-                </div>
-                <h3>Acid Wash T-Shirt - Color 5</h3>
-                <p>$35</p>
-                <button onclick="addToCart('Acid Wash T-Shirt - Color 5', 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png', 35)">Add to Cart</button>
+    <main>
+        <div class="hero" id="home">
+            <div>
+                <h1>WEALTH STYLE</h1>
+                <p>Wear Your Wealth</p>
+                <a class="btn" href="#shop">Shop the collection</a>
             </div>
         </div>
-    </section>
 
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <p>📧 Email: <a href="mailto:jean.cas03@outlook.com">jean.cas03@outlook.com</a></p>
-        <p style="margin-top: 20px; font-size: 1rem;">Feel free to reach out with any questions about our Acid Wash T-Shirts!</p>
-    </section>
-
-    <button class="cart-toggle-btn" id="cartToggle" onclick="toggleCart()">🛒</button>
-
-    <div id="cart-overlay">
-        <section id="cart">
-            <h2>Your Cart 🛒</h2>
-            <div id="cart-items">
-                <p>Your cart is empty.</p>
-            </div>
-            <h3 id="cart-total">Total: $0</h3>
-            <button id="checkout-btn" class="checkout-btn" onclick="openCheckout()" disabled>Checkout</button>
+        <section class="page-section" id="shop">
+            <h2>Acid Wash Oversize T-Shirt Collection</h2>
+            <div class="products" id="products"></div>
         </section>
-    </div>
 
-    <div id="checkout-modal" class="checkout-modal" aria-modal="true" role="dialog">
+        <section class="page-section" id="contact">
+            <h2>Contact Us</h2>
+            <p>📧 Email: <a href="mailto:jean.cas03@outlook.com">jean.cas03@outlook.com</a></p>
+            <p style="margin-top: 20px; font-size: 1rem;">Feel free to reach out with any questions about our Acid Wash T-Shirts!</p>
+        </section>
+    </main>
+
+    <button class="cart-toggle-btn" id="cartToggle" aria-label="Open cart" aria-controls="cart">
+        🛒<span class="cart-count" id="cart-count">0</span>
+    </button>
+
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+
+    <aside id="cart" aria-label="Shopping cart">
+        <div class="cart-head">
+            <h2>Your Cart 🛒</h2>
+            <button class="icon-btn" id="cart-close" aria-label="Close cart">×</button>
+        </div>
+        <div id="cart-items"></div>
+        <h3 id="cart-total">Total: $0</h3>
+        <button id="checkout-btn" class="btn" disabled>Checkout</button>
+    </aside>
+
+    <div id="checkout-modal" class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
         <div class="checkout-modal-content">
-            <button class="checkout-close" type="button" onclick="closeCheckout()" aria-label="Close checkout">×</button>
-            <h3>Checkout</h3>
-            <p>Payment processing will be connected here soon. This is a ready-to-use checkout flow for your store.</p>
-            <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)">
-                <input type="text" id="customer-name" placeholder="Full name" required>
-                <input type="email" id="customer-email" placeholder="Email address" required>
-                <textarea id="customer-notes" placeholder="Delivery notes or sizing details"></textarea>
-                <div class="checkout-summary">Total: <span id="checkout-total">$0</span></div>
-                <button type="submit" id="checkout-submit">Continue to payment</button>
-            </form>
+            <button class="icon-btn" type="button" id="checkout-close" aria-label="Close checkout">×</button>
+            <h3 id="checkout-title">Checkout</h3>
+            <div id="checkout-body">
+                <p>Online payment isn't switched on yet. Send your order request and we'll email you to confirm it and arrange payment. You won't be charged now.</p>
+                <ul class="order-lines" id="order-lines"></ul>
+                <form id="checkout-form">
+                    <input type="text" id="customer-name" placeholder="Full name" autocomplete="name" required>
+                    <input type="email" id="customer-email" placeholder="Email address" autocomplete="email" required>
+                    <textarea id="customer-notes" placeholder="Delivery address and any notes"></textarea>
+                    <div class="checkout-summary">Total: <span id="checkout-total">$0</span></div>
+                    <button type="submit" class="btn">Send order request</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
-        const hamburger = document.getElementById('hamburger');
-        const nav = document.getElementById('nav');
+        /* =========================================================
+           EDIT YOUR STORE HERE
+           ========================================================= */
+        const STORE_EMAIL = 'jean.cas03@outlook.com';
+        const SIZES = ['S', 'M', 'L', 'XL'];
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            nav.classList.toggle('active');
-        });
+        // To rename a shirt, change its name. To swap photos, change front/back.
+        // Tip: rename your image files without spaces (e.g. tee-1-front.png) and update them here.
+        const PRODUCTS = [
+            { id: 'tee-1', name: 'Acid Wash T-Shirt - Color 1', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png' },
+            { id: 'tee-2', name: 'Acid Wash T-Shirt - Color 2', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png' },
+            { id: 'tee-3', name: 'Acid Wash T-Shirt - Color 3', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-6.png' },
+            { id: 'tee-4', name: 'Acid Wash T-Shirt - Color 4', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png', back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-12.png' },
+            { id: 'tee-5', name: 'Acid Wash T-Shirt - Color 5', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png', back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-16.png' }
+        ];
+        /* ========================================================= */
 
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-            });
-        });
+        const $ = (id) => document.getElementById(id);
+        const money = (n) => '$' + n;
+        const byId = (id) => PRODUCTS.find(p => p.id === id);
+        const encodeSrc = (path) => encodeURI(path); // handles spaces in file names
 
-        const isMobile = () => window.innerWidth <= 768;
-        const cartSection = document.getElementById('cart');
-        const cartToggle = document.getElementById('cartToggle');
-        const cartOverlay = document.getElementById('cart-overlay');
-        const checkoutModal = document.getElementById('checkout-modal');
-        const checkoutBtn = document.getElementById('checkout-btn');
-        const checkoutTotal = document.getElementById('checkout-total');
+        /* ---------- Menu ---------- */
+        const hamburger = $('hamburger');
+        const nav = $('nav');
 
-        function toggleCart() {
-            if (isMobile()) {
-                cartSection.classList.toggle('visible');
-            }
+        function setMenu(open) {
+            hamburger.classList.toggle('active', open);
+            nav.classList.toggle('active', open);
+            hamburger.setAttribute('aria-expanded', String(open));
         }
 
-        cartOverlay.addEventListener('click', (e) => {
-            if (e.target === cartOverlay) {
-                cartOverlay.style.display = 'none';
-            }
-        });
+        hamburger.addEventListener('click', () => setMenu(!nav.classList.contains('active')));
+        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
 
-        window.addEventListener('resize', () => {
-            if (!isMobile()) {
-                cartToggle.style.display = 'none';
-                cartSection.classList.remove('visible');
-                cartOverlay.style.display = 'flex';
-            } else {
-                cartToggle.style.display = 'flex';
-                cartOverlay.style.display = 'none';
-            }
-        });
-
-        if (!isMobile()) {
-            cartToggle.style.display = 'none';
-            cartOverlay.style.display = 'flex';
+        /* ---------- Product grid ---------- */
+        function renderProducts() {
+            $('products').innerHTML = PRODUCTS.map(p => `
+                <article class="product" data-id="${p.id}">
+                    <button type="button" class="image-container" aria-label="Flip ${p.name} to see the back">
+                        <img class="front" src="${encodeSrc(p.front)}" alt="${p.name}, front" loading="lazy">
+                        <img class="back" src="${encodeSrc(p.back)}" alt="${p.name}, back" loading="lazy">
+                        <span class="view-indicator">View back</span>
+                    </button>
+                    <h3>${p.name}</h3>
+                    <p class="price">${money(p.price)}</p>
+                    <fieldset class="size-picker">
+                        <legend>Size</legend>
+                        ${SIZES.map(s => `
+                            <label>
+                                <input type="radio" name="size-${p.id}" value="${s}">
+                                <span>${s}</span>
+                            </label>`).join('')}
+                    </fieldset>
+                    <p class="size-error" role="alert"></p>
+                    <button type="button" class="btn add-btn">Add to cart</button>
+                </article>
+            `).join('');
         }
 
-        function toggleImage(container) {
-            if (isMobile()) {
-                container.classList.toggle('flipped');
-                const indicator = container.querySelector('.view-indicator');
-                if (container.classList.contains('flipped')) {
-                    indicator.textContent = 'Tap for front';
-                } else {
-                    indicator.textContent = 'Tap for back';
-                }
-            }
-        }
+        $('products').addEventListener('click', (e) => {
+            const card = e.target.closest('.product');
+            if (!card) return;
 
-        let cartItems = [];
-        let cartTotal = 0;
-
-        function addToCart(productName, productImage, price) {
-            cartItems.push({ name: productName, image: productImage, price: price });
-            cartTotal += price;
-            updateCart();
-
-            if (isMobile()) {
-                cartSection.classList.add('visible');
-            }
-        }
-
-        function updateCart() {
-            const cartItemsDiv = document.getElementById('cart-items');
-            const cartTotalDiv = document.getElementById('cart-total');
-
-            if (cartItems.length === 0) {
-                cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
-                cartTotalDiv.textContent = 'Total: $0';
-                checkoutBtn.disabled = true;
-                checkoutBtn.style.opacity = '0.5';
-                checkoutBtn.style.cursor = 'not-allowed';
+            const flip = e.target.closest('.image-container');
+            if (flip) {
+                const flipped = flip.classList.toggle('flipped');
+                flip.querySelector('.view-indicator').textContent = flipped ? 'View front' : 'View back';
                 return;
             }
 
-            cartItemsDiv.innerHTML = cartItems.map((item, index) => `
-                <div class="cart-item">
-                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                    <p class="cart-item-name">${item.name}</p>
-                    <p class="cart-item-price">$${item.price}</p>
-                    <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
-                </div>
-            `).join('');
+            if (e.target.closest('.add-btn')) {
+                const size = card.querySelector('input[type="radio"]:checked');
+                const error = card.querySelector('.size-error');
+                if (!size) {
+                    error.textContent = 'Pick a size first.';
+                    return;
+                }
+                error.textContent = '';
+                addToCart(card.dataset.id, size.value);
+            }
+        });
 
-            cartTotalDiv.textContent = `Total: $${cartTotal}`;
-            checkoutTotal.textContent = `$${cartTotal}`;
-            checkoutBtn.disabled = false;
-            checkoutBtn.style.opacity = '1';
-            checkoutBtn.style.cursor = 'pointer';
+        /* ---------- Cart (saved in the browser so a refresh doesn't empty it) ---------- */
+        let cart = [];
+
+        function loadCart() {
+            try {
+                const saved = JSON.parse(localStorage.getItem('wealthstyle-cart') || '[]');
+                // Only keep items that still exist in the catalog; prices always come from PRODUCTS
+                cart = saved.filter(i => byId(i.id) && SIZES.includes(i.size) && i.qty > 0);
+            } catch (err) {
+                cart = [];
+            }
         }
 
-        function removeFromCart(index) {
-            cartTotal -= cartItems[index].price;
-            cartItems.splice(index, 1);
+        function saveCart() {
+            try { localStorage.setItem('wealthstyle-cart', JSON.stringify(cart)); } catch (err) { /* private mode */ }
+        }
+
+        const cartTotal = () => cart.reduce((sum, i) => sum + byId(i.id).price * i.qty, 0);
+        const cartCount = () => cart.reduce((sum, i) => sum + i.qty, 0);
+
+        function addToCart(id, size) {
+            const existing = cart.find(i => i.id === id && i.size === size);
+            if (existing) existing.qty += 1;
+            else cart.push({ id, size, qty: 1 });
+            updateCart();
+            openCart();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) cart.splice(index, 1);
             updateCart();
         }
 
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            saveCart();
+            const itemsDiv = $('cart-items');
+            const count = cartCount();
+
+            $('cart-count').textContent = count;
+            $('cart-count').classList.toggle('show', count > 0);
+            $('cartToggle').setAttribute('aria-label', `Open cart, ${count} item${count === 1 ? '' : 's'}`);
+            $('cart-total').textContent = 'Total: ' + money(cartTotal());
+            $('checkout-btn').disabled = cart.length === 0;
+
+            if (cart.length === 0) {
+                itemsDiv.innerHTML = '<p>Your cart is empty. Pick a shirt and a size to get started.</p>';
+                return;
+            }
+
+            itemsDiv.innerHTML = cart.map((item, index) => {
+                const p = byId(item.id);
+                return `
+                <div class="cart-item">
+                    <img class="cart-item-image" src="${encodeSrc(p.front)}" alt="${p.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${p.name}</div>
+                        <div class="cart-item-meta">Size ${item.size}</div>
+                        <div class="cart-item-price">${money(p.price * item.qty)}</div>
+                        <div class="qty-row">
+                            <button class="qty-btn" aria-label="One fewer" onclick="changeQty(${index}, -1)">−</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" aria-label="One more" onclick="changeQty(${index}, 1)">+</button>
+                            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function openCart() {
+            $('cart').classList.add('visible');
+            $('cart-backdrop').classList.add('show');
+        }
+
+        function closeCart() {
+            $('cart').classList.remove('visible');
+            $('cart-backdrop').classList.remove('show');
+        }
+
+        $('cartToggle').addEventListener('click', () => {
+            $('cart').classList.contains('visible') ? closeCart() : openCart();
+        });
+        $('cart-close').addEventListener('click', closeCart);
+        $('cart-backdrop').addEventListener('click', closeCart);
+
+        /* ---------- Checkout (order request by email until a payment provider is connected) ---------- */
+        const checkoutModal = $('checkout-modal');
+        const checkoutFormHTML = $('checkout-body').innerHTML;
+
+        function orderSummaryLines() {
+            return cart.map(i => `${i.qty} x ${byId(i.id).name} (size ${i.size}) - ${money(byId(i.id).price * i.qty)}`);
+        }
+
         function openCheckout() {
-            if (cartItems.length === 0) return;
-            checkoutTotal.textContent = `$${cartTotal}`;
+            if (cart.length === 0) return;
+            closeCart();
+            $('checkout-body').innerHTML = checkoutFormHTML;
+            $('order-lines').innerHTML = orderSummaryLines().map(l => `<li>${l}</li>`).join('');
+            $('checkout-total').textContent = money(cartTotal());
+            $('checkout-form').addEventListener('submit', handleCheckoutSubmit);
             checkoutModal.classList.add('active');
+            $('customer-name').focus();
         }
 
         function closeCheckout() {
             checkoutModal.classList.remove('active');
-            document.getElementById('checkout-form').reset();
         }
-
-        checkoutModal.addEventListener('click', (e) => {
-            if (e.target === checkoutModal) {
-                closeCheckout();
-            }
-        });
 
         function handleCheckoutSubmit(event) {
             event.preventDefault();
-            const name = document.getElementById('customer-name').value.trim();
-            const email = document.getElementById('customer-email').value.trim();
+            const name = $('customer-name').value.trim();
+            const email = $('customer-email').value.trim();
+            const notes = $('customer-notes').value.trim();
+            if (!name || !email) return;
 
-            if (!name || !email) {
-                return;
-            }
+            const body = [
+                `New order request from ${name} (${email})`,
+                '',
+                ...orderSummaryLines(),
+                '',
+                `Total: ${money(cartTotal())}`,
+                '',
+                `Notes / address: ${notes || '(none)'}`
+            ].join('\n');
 
-            alert(`Thanks ${name}! Your checkout is ready for payment integration. We will connect Stripe/PayPal next.`);
-            cartItems = [];
-            cartTotal = 0;
+            window.location.href = `mailto:${STORE_EMAIL}?subject=${encodeURIComponent('Wealth Style order request')}&body=${encodeURIComponent(body)}`;
+
+            cart = [];
             updateCart();
-            closeCheckout();
+            $('checkout-body').innerHTML = '<p>Your email app should have opened with your order request. Press send in that email to finish. If nothing opened, email ' + STORE_EMAIL + ' with the shirts and sizes you want.</p><button type="button" class="btn" id="done-btn">Done</button>';
+            $('done-btn').addEventListener('click', closeCheckout);
         }
 
+        $('checkout-btn').addEventListener('click', openCheckout);
+        $('checkout-close').addEventListener('click', closeCheckout);
+        checkoutModal.addEventListener('click', (e) => { if (e.target === checkoutModal) closeCheckout(); });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { closeCheckout(); closeCart(); setMenu(false); }
+        });
+
+        /* ---------- Stars ---------- */
         const starsContainer = document.querySelector('.stars');
-        const numberOfStars = 100;
-
-        for (let i = 0; i < numberOfStars; i++) {
+        for (let i = 0; i < 100; i++) {
             const star = document.createElement('div');
-            star.classList.add('star');
-
+            star.className = 'star';
             const size = Math.random() * 3 + 0.5;
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            const duration = Math.random() * 3 + 2;
-
             star.style.width = size + 'px';
             star.style.height = size + 'px';
-            star.style.left = x + '%';
-            star.style.top = y + '%';
-            star.style.animationDuration = duration + 's';
-
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
             starsContainer.appendChild(star);
         }
+
+        /* ---------- Start ---------- */
+        renderProducts();
+        loadCart();
+        updateCart();
     </script>
 </body>
 </html>
