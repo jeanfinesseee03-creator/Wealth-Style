@@ -109,13 +109,55 @@
             pointer-events: none;
         }
 
-        .stars { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+        .stars { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+
+        /* One layer that slowly drifts upward. It is 2x the screen height and holds two
+           identical copies of the stars, so the loop is seamless. Only transform is animated,
+           which the browser handles on the graphics chip (no repainting). */
+        .star-field {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            animation: drift 150s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes drift {
+            from { transform: translate3d(0, 0, 0); }
+            to   { transform: translate3d(0, -50%, 0); }
+        }
 
         .star {
             position: absolute;
             background: white;
             border-radius: 50%;
-            animation: twinkle-star 3s infinite;
+            opacity: 0.7;
+        }
+
+        /* Only some stars twinkle, which keeps the number of running animations low */
+        .star.twinkle { animation: twinkle-star 3s infinite; }
+
+        /* Shooting stars: just two elements, each visible for under a second per cycle */
+        .shooting-star {
+            position: absolute;
+            width: 130px;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(to right, rgba(255,255,255,0), #fff);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .shooting-star.s1 { top: 8%;  left: 12%; animation: shoot 11s linear infinite 3s; }
+        .shooting-star.s2 { top: 22%; left: 55%; animation: shoot 17s linear infinite 9s; }
+
+        @keyframes shoot {
+            0%   { transform: rotate(35deg) translateX(0);     opacity: 0; }
+            1%   { opacity: 1; }
+            6%   { transform: rotate(35deg) translateX(650px); opacity: 0; }
+            100% { transform: rotate(35deg) translateX(650px); opacity: 0; }
         }
 
         @keyframes twinkle-star { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
@@ -125,7 +167,8 @@
         .nebula {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
+            filter: blur(60px);
+            will-change: transform;
             opacity: 0.3;
             z-index: 1;
             pointer-events: none;
@@ -152,7 +195,8 @@
 
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .space-background, .star, .nebula { animation: none; }
+            .space-background, .star-field, .star.twinkle, .nebula { animation: none; }
+            .shooting-star { display: none; }
         }
 
         /* ---------- Hero ---------- */
@@ -521,7 +565,10 @@
     </header>
 
     <div class="space-background"></div>
-    <div class="stars"></div>
+    <div class="stars">
+        <div class="shooting-star s1"></div>
+        <div class="shooting-star s2"></div>
+    </div>
     <div class="nebula nebula-1"></div>
     <div class="nebula nebula-2"></div>
     <div class="nebula nebula-3"></div>
@@ -813,18 +860,35 @@
         });
 
         /* ---------- Stars ---------- */
+        // Fewer stars on phones, and only every 3rd star twinkles: keeps things smooth.
         const starsContainer = document.querySelector('.stars');
-        for (let i = 0; i < 100; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
+        const starCount = window.innerWidth < 769 ? 40 : 70;
+        const field = document.createElement('div');
+        field.className = 'star-field';
+        const fragment = document.createDocumentFragment();
+
+        for (let i = 0; i < starCount; i++) {
             const size = Math.random() * 3 + 0.5;
-            star.style.width = size + 'px';
-            star.style.height = size + 'px';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            starsContainer.appendChild(star);
+            const x = Math.random() * 100;
+            const y = Math.random() * 50;          // first half of the tall field
+            const duration = Math.random() * 3 + 2;
+            const twinkles = i % 3 === 0;
+
+            // Place each star twice (y and y+50%) so the upward drift loops with no jump
+            [0, 50].forEach(offset => {
+                const star = document.createElement('div');
+                star.className = twinkles ? 'star twinkle' : 'star';
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = x + '%';
+                star.style.top = (y + offset) + '%';
+                if (twinkles) star.style.animationDuration = duration + 's';
+                fragment.appendChild(star);
+            });
         }
+
+        field.appendChild(fragment);
+        starsContainer.appendChild(field);
 
         /* ---------- Start ---------- */
         renderProducts();
