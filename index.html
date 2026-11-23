@@ -39,8 +39,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            background: rgba(5, 8, 20, 0.88);
             z-index: 100;
         }
 
@@ -108,7 +107,6 @@
                 radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 90px 10px, #fff, rgba(0,0,0,0));
             background-size: 200px 200px;
-            animation: twinkle 5s infinite;
             z-index: 1;
             pointer-events: none;
         }
@@ -171,7 +169,6 @@
         .nebula {
             position: fixed;
             border-radius: 50%;
-            filter: blur(60px);
             will-change: transform;
             opacity: 0.3;
             z-index: 1;
@@ -199,7 +196,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            .space-background, .star-field, .star.twinkle, .nebula { animation: none; }
+            .star-field, .star.twinkle, .nebula { animation: none; }
             .shooting-star { display: none; }
         }
 
@@ -625,11 +622,11 @@
         // To rename a shirt, change its name. To swap photos, change front/back.
         // If you change ids, names or prices here, change them in the Vercel function too.
         const PRODUCTS = [
-            { id: 'tee-1', name: 'Acid Wash T-Shirt - Color 1', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png' },
-            { id: 'tee-2', name: 'Acid Wash T-Shirt - Color 2', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png' },
-            { id: 'tee-3', name: 'Acid Wash T-Shirt - Color 3', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-6.png' },
-            { id: 'tee-4', name: 'Acid Wash T-Shirt - Color 4', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png', back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-12.png' },
-            { id: 'tee-5', name: 'Acid Wash T-Shirt - Color 5', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png', back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-16.png' }
+            { id: 'tee-1', name: 'Acid Wash T-Shirt - Color 1', price: 25, front: 'img/shirt-1.webp',  back: 'img/shirt-2.webp' },
+            { id: 'tee-2', name: 'Acid Wash T-Shirt - Color 2', price: 25, front: 'img/shirt-3.webp',  back: 'img/shirt-4.webp' },
+            { id: 'tee-3', name: 'Acid Wash T-Shirt - Color 3', price: 25, front: 'img/shirt-5.webp',  back: 'img/shirt-6.webp' },
+            { id: 'tee-4', name: 'Acid Wash T-Shirt - Color 4', price: 25, front: 'img/shirt-11.webp', back: 'img/shirt-12.webp' },
+            { id: 'tee-5', name: 'Acid Wash T-Shirt - Color 5', price: 25, front: 'img/shirt-15.webp', back: 'img/shirt-16.webp' }
         ];
         /* ========================================================= */
 
