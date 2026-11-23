@@ -793,17 +793,20 @@
         /* ---------- Checkout (Stripe embedded form) ---------- */
         const checkoutModal = $('checkout-modal');
 
+        // Dark theme to match the navy checkout popup
         const appearance = {
-            theme: 'flat',
-            labels: 'auto',
+            theme: 'night',
+            labels: 'above',
             inputs: 'spaced',
             variables: {
-                borderRadius: '4px',
-                colorBackground: '#ffffff',
-                colorDanger: '#df1b41',
-                colorPrimary: '#0570de',
+                borderRadius: '6px',
+                colorBackground: '#0d1324',   // same navy as the popup
+                colorText: '#f2f2f2',         // light labels and text
+                colorTextSecondary: '#c9c9d6',
+                colorTextPlaceholder: '#8a8fa3',
+                colorPrimary: '#8a2be2',      // brand purple (Pay button, selected options)
+                colorDanger: '#ff6b81',
                 colorSuccess: '#00c853',
-                colorText: '#30313d',
                 fontFamily: 'default',
                 fontSizeBase: '16px',
                 spacingUnit: '4px'
