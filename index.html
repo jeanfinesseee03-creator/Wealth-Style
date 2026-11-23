@@ -9,6 +9,10 @@
     <meta property="og:title" content="Wealth Style - Acid Wash T-Shirts">
     <meta property="og:description" content="Oversized 250 GSM acid wash t-shirts. Wear your wealth.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+
+    <!-- Stripe.js: must be loaded directly from Stripe (never copy or self-host it) -->
+    <script src="https://js.stripe.com/dahlia/stripe.js"></script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -528,25 +532,8 @@
         .checkout-modal-content h3 { color: gold; margin-bottom: 12px; font-size: 1.5rem; }
         .checkout-modal-content p { color: #d6d6d6; font-size: 0.95rem; margin-bottom: 16px; }
 
-        #checkout-form { display: flex; flex-direction: column; gap: 12px; }
-
-        #checkout-form input,
-        #checkout-form textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            background: rgba(255, 255, 255, 0.06);
-            color: white;
-            font-size: 1rem; /* 16px stops iPhones zooming into the field */
-            font-family: inherit;
-        }
-
-        #checkout-form textarea { min-height: 90px; resize: vertical; }
-
-        .checkout-summary { color: gold; font-weight: bold; }
-
-        .order-lines { color: #ccc; font-size: 0.9rem; margin-bottom: 4px; padding-left: 18px; }
+        #stripe-checkout-form { min-height: 20px; }
+        #checkout-message { margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -615,15 +602,8 @@
             <button class="icon-btn" type="button" id="checkout-close" aria-label="Close checkout">×</button>
             <h3 id="checkout-title">Checkout</h3>
             <div id="checkout-body">
-                <p>Online payment isn't switched on yet. Send your order request and we'll email you to confirm it and arrange payment. You won't be charged now.</p>
-                <ul class="order-lines" id="order-lines"></ul>
-                <form id="checkout-form">
-                    <input type="text" id="customer-name" placeholder="Full name" autocomplete="name" required>
-                    <input type="email" id="customer-email" placeholder="Email address" autocomplete="email" required>
-                    <textarea id="customer-notes" placeholder="Delivery address and any notes"></textarea>
-                    <div class="checkout-summary">Total: <span id="checkout-total">$0</span></div>
-                    <button type="submit" class="btn">Send order request</button>
-                </form>
+                <div id="stripe-checkout-form"></div>
+                <p id="checkout-message" role="alert"></p>
             </div>
         </div>
     </div>
@@ -632,11 +612,17 @@
         /* =========================================================
            EDIT YOUR STORE HERE
            ========================================================= */
-        const STORE_EMAIL = 'jean.cas03@outlook.com';
         const SIZES = ['S', 'M', 'L', 'XL'];
 
+        // 1) Your Stripe PUBLISHABLE key (starts with pk_test_ or pk_live_). Safe to put here.
+        //    NEVER put your secret key (sk_...) in this file.
+        const STRIPE_PUBLISHABLE_KEY = 'pk_test_...';
+
+        // 2) Your Vercel function address (see STRIPE_INTEGRATION_TODO.md)
+        const API_URL = 'https://YOUR-PROJECT.vercel.app/api/create-checkout-session';
+
         // To rename a shirt, change its name. To swap photos, change front/back.
-        // Tip: rename your image files without spaces (e.g. tee-1-front.png) and update them here.
+        // If you change ids, names or prices here, change them in the Vercel function too.
         const PRODUCTS = [
             { id: 'tee-1', name: 'Acid Wash T-Shirt - Color 1', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png' },
             { id: 'tee-2', name: 'Acid Wash T-Shirt - Color 2', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png' },
@@ -803,52 +789,84 @@
         $('cart-close').addEventListener('click', closeCart);
         $('cart-backdrop').addEventListener('click', closeCart);
 
-        /* ---------- Checkout (order request by email until a payment provider is connected) ---------- */
+        /* ---------- Checkout (Stripe embedded form) ---------- */
         const checkoutModal = $('checkout-modal');
-        const checkoutFormHTML = $('checkout-body').innerHTML;
 
-        function orderSummaryLines() {
-            return cart.map(i => `${i.qty} x ${byId(i.id).name} (size ${i.size}) - ${money(byId(i.id).price * i.qty)}`);
-        }
+        const appearance = {
+            theme: 'flat',
+            labels: 'auto',
+            inputs: 'spaced',
+            variables: {
+                borderRadius: '4px',
+                colorBackground: '#ffffff',
+                colorDanger: '#df1b41',
+                colorPrimary: '#0570de',
+                colorSuccess: '#00c853',
+                colorText: '#30313d',
+                fontFamily: 'default',
+                fontSizeBase: '16px',
+                spacingUnit: '4px'
+            }
+        };
 
-        function openCheckout() {
+        async function openCheckout() {
             if (cart.length === 0) return;
             closeCart();
-            $('checkout-body').innerHTML = checkoutFormHTML;
-            $('order-lines').innerHTML = orderSummaryLines().map(l => `<li>${l}</li>`).join('');
-            $('checkout-total').textContent = money(cartTotal());
-            $('checkout-form').addEventListener('submit', handleCheckoutSubmit);
             checkoutModal.classList.add('active');
-            $('customer-name').focus();
+
+            const message = $('checkout-message');
+            message.textContent = 'Loading secure checkout…';
+            $('stripe-checkout-form').innerHTML = '';
+
+            try {
+                const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+                // Only ids, sizes and quantities are sent. Prices are set on the server.
+                const clientSecret = fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ items: cart.map(i => ({ id: i.id, size: i.size, qty: i.qty })) })
+                })
+                    .then((r) => r.json())
+                    .then((j) => {
+                        if (!j.client_secret) throw new Error(j.error || 'No client secret');
+                        return j.client_secret;
+                    });
+
+                const checkout = stripe.initCheckoutFormSdk({ clientSecret, appearance });
+                const form = checkout.createForm({ layout: 'expanded' });
+                form.mount('#stripe-checkout-form');
+                message.textContent = '';
+
+                const loaded = await checkout.loadActions();
+                if (loaded.type === 'success') {
+                    form.on('confirm', async (event) => {
+                        try {
+                            const result = await loaded.actions.confirm({ formConfirmEvent: event });
+                            if (result && result.type === 'error') {
+                                message.textContent = (result.error && result.error.message) || 'Payment failed. Please try again.';
+                                return;
+                            }
+                            cart = [];
+                            updateCart();
+                            $('stripe-checkout-form').innerHTML = '';
+                            message.textContent = 'Thank you! Your payment was received.';
+                        } catch (error) {
+                            console.error('Payment confirmation error:', error);
+                            message.textContent = 'Payment could not be confirmed. Please try again.';
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+                message.textContent = 'Sorry, checkout could not load. Please try again or email us.';
+            }
         }
 
         function closeCheckout() {
             checkoutModal.classList.remove('active');
-        }
-
-        function handleCheckoutSubmit(event) {
-            event.preventDefault();
-            const name = $('customer-name').value.trim();
-            const email = $('customer-email').value.trim();
-            const notes = $('customer-notes').value.trim();
-            if (!name || !email) return;
-
-            const body = [
-                `New order request from ${name} (${email})`,
-                '',
-                ...orderSummaryLines(),
-                '',
-                `Total: ${money(cartTotal())}`,
-                '',
-                `Notes / address: ${notes || '(none)'}`
-            ].join('\n');
-
-            window.location.href = `mailto:${STORE_EMAIL}?subject=${encodeURIComponent('Wealth Style order request')}&body=${encodeURIComponent(body)}`;
-
-            cart = [];
-            updateCart();
-            $('checkout-body').innerHTML = '<p>Your email app should have opened with your order request. Press send in that email to finish. If nothing opened, email ' + STORE_EMAIL + ' with the shirts and sizes you want.</p><button type="button" class="btn" id="done-btn">Done</button>';
-            $('done-btn').addEventListener('click', closeCheckout);
+            $('stripe-checkout-form').innerHTML = '';
+            $('checkout-message').textContent = '';
         }
 
         $('checkout-btn').addEventListener('click', openCheckout);
