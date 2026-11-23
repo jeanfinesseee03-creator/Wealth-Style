@@ -618,17 +618,18 @@
         //    NEVER put your secret key (sk_...) in this file.
         const STRIPE_PUBLISHABLE_KEY = 'pk_test_...';
 
-        // 2) Your Vercel function address (see STRIPE_INTEGRATION_TODO.md)
-        const API_URL = 'https://YOUR-PROJECT.vercel.app/api/create-checkout-session';
+        // 2) Your Vercel project address, no slash at the end (see STRIPE_SETUP.md)
+        const API_BASE = 'https://YOUR-PROJECT.vercel.app';
+        const API_URL = API_BASE + '/api/create-checkout-session';
 
         // To rename a shirt, change its name. To swap photos, change front/back.
         // If you change ids, names or prices here, change them in the Vercel function too.
         const PRODUCTS = [
-            { id: 'tee-1', name: 'Acid Wash T-Shirt - Color 1', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png' },
-            { id: 'tee-2', name: 'Acid Wash T-Shirt - Color 2', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png' },
-            { id: 'tee-3', name: 'Acid Wash T-Shirt - Color 3', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-6.png' },
-            { id: 'tee-4', name: 'Acid Wash T-Shirt - Color 4', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png', back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-12.png' },
-            { id: 'tee-5', name: 'Acid Wash T-Shirt - Color 5', price: 35, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png', back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-16.png' }
+            { id: 'tee-1', name: 'Acid Wash T-Shirt - Color 1', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-1.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-2.png' },
+            { id: 'tee-2', name: 'Acid Wash T-Shirt - Color 2', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-3.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-4.png' },
+            { id: 'tee-3', name: 'Acid Wash T-Shirt - Color 3', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-5.png',  back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-6.png' },
+            { id: 'tee-4', name: 'Acid Wash T-Shirt - Color 4', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-11.png', back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-12.png' },
+            { id: 'tee-5', name: 'Acid Wash T-Shirt - Color 5', price: 25, front: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-15.png', back: 'Acid Wash Oversize T-Shirt - 250 GSM-mockups-16.png' }
         ];
         /* ========================================================= */
 
@@ -839,27 +840,54 @@
                 message.textContent = '';
 
                 const loaded = await checkout.loadActions();
-                if (loaded.type === 'success') {
-                    form.on('confirm', async (event) => {
-                        try {
-                            const result = await loaded.actions.confirm({ formConfirmEvent: event });
-                            if (result && result.type === 'error') {
-                                message.textContent = (result.error && result.error.message) || 'Payment failed. Please try again.';
-                                return;
-                            }
-                            cart = [];
-                            updateCart();
-                            $('stripe-checkout-form').innerHTML = '';
-                            message.textContent = 'Thank you! Your payment was received.';
-                        } catch (error) {
-                            console.error('Payment confirmation error:', error);
-                            message.textContent = 'Payment could not be confirmed. Please try again.';
-                        }
-                    });
+                if (loaded.type !== 'success') {
+                    throw new Error((loaded.error && loaded.error.message) || 'Checkout failed to load');
                 }
+                form.on('confirm', async (event) => {
+                    try {
+                        // Cards finish right here; bank-app style methods redirect and come back with ?session_id=
+                        const result = await loaded.actions.confirm({ formConfirmEvent: event, redirect: 'if_required' });
+                        if (result && result.type === 'error') {
+                            // Stripe already shows the error inside the form
+                            return;
+                        }
+                        showThankYou();
+                    } catch (error) {
+                        console.error('Payment confirmation error:', error);
+                        message.textContent = 'Payment could not be confirmed. Please try again.';
+                    }
+                });
             } catch (err) {
                 console.error(err);
                 message.textContent = 'Sorry, checkout could not load. Please try again or email us.';
+            }
+        }
+
+        function showThankYou() {
+            cart = [];
+            updateCart();
+            checkoutModal.classList.add('active');
+            $('stripe-checkout-form').innerHTML = '';
+            $('checkout-message').textContent = 'Thank you! Your payment was received. A receipt is on its way to your email.';
+        }
+
+        // Customer came back from a redirect payment method: check how it went
+        async function handleReturnFromStripe() {
+            const params = new URLSearchParams(window.location.search);
+            const sessionId = params.get('session_id');
+            if (!sessionId) return;
+            history.replaceState(null, '', window.location.pathname + window.location.hash);
+            try {
+                const r = await fetch(API_BASE + '/api/session-status?session_id=' + encodeURIComponent(sessionId));
+                const s = await r.json();
+                if (s.status === 'complete') {
+                    showThankYou();
+                } else {
+                    checkoutModal.classList.add('active');
+                    $('checkout-message').textContent = 'Your payment did not go through. Your cart is still saved, so you can try again.';
+                }
+            } catch (err) {
+                console.error(err);
             }
         }
 
@@ -912,6 +940,7 @@
         renderProducts();
         loadCart();
         updateCart();
+        handleReturnFromStripe();
     </script>
 </body>
 </html>

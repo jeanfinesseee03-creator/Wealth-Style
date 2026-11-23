@@ -1,0 +1,11 @@
+{
+  "name": "wealth-style",
+  "private": true,
+  "description": "Wealth Style shop. Static site on GitHub Pages; Stripe checkout functions on Vercel.",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "stripe": "^23.2.0"
+  }
+}
